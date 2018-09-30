@@ -1,7 +1,7 @@
-#keepalived+LVS 实现双机热备、负载均衡、失效转移 高性能 高可用 高伸缩性 服务器集群
+# keepalived+LVS 实现双机热备、负载均衡、失效转移 高性能 高可用 高伸缩性 服务器集群
 文章来源:[https://www.cnblogs.com/painsOnline/p/5177464.html](https://www.cnblogs.com/painsOnline/p/5177464.html)
 
-##第一步：配置各个服务器IP
+## 第一步：配置各个服务器IP
 * /etc/init.d/functions 要给755权限新建lvsrs文件,内容如下:
 ```
 #!/bin/bash
@@ -39,7 +39,7 @@ esac
 * yum install ipvsadm	安装ipvsadm(查看虚拟网络状况)
 * yum -y install keepalived	安装keepalived,构建虚拟ip组并检测各ip的健康状态
 
-##第三步：配置keepalived(位置在/etc/keepalived/keepalived.conf) 
+## 第三步：配置keepalived(位置在/etc/keepalived/keepalived.conf) 
 > master机上的keepalived.conf:
 ```
 #这里是全局定义部分
@@ -253,7 +253,7 @@ TCP 192.168.138.200:http rr
 -> 192.168.138.4:http Route 1 0 5 
 ```
 > 每个都被分发了5次,即配置成功
-###高可用测试
+### 高可用测试
 > 此时192.168.138.200可以正常访问
 * 关闭主机上的nginx(原文是关闭keepalived服务,即 service keepalived stop,为了更加真实的模拟环境,不关闭keepalived)
 > service nginx stop
@@ -284,9 +284,9 @@ Feb 3 18:08:09 localhost Keepalived_healthcheckers[5548]: Netlink reflector repo
 ```
 > 自动切换回BACKUP
 
-#以上为nginx的部署,如果不需要加上mysql的高可用可以到此为止了,下面是添加一个mysql的高可用
+# 以上为nginx的部署,如果不需要加上mysql的高可用可以到此为止了,下面是添加一个mysql的高可用
 
-##如果已按照nginx集群部署好,还要继续添加一个mysql的VIP的话;
+## 如果已按照nginx集群部署好,还要继续添加一个mysql的VIP的话;
 
 * 先在lvsrs文件中添加一个vip,修改为如下内容:
 ```
@@ -378,7 +378,7 @@ vrrp_instance VI_2 {
 }
 ```
 
-#master服务器部分的keepalived.conf
+# master服务器部分的keepalived.conf
 ```
 virtual_server 192.168.138.200 80 {
     delay_loop 6 #设定运行情况检查时间 单位s
@@ -449,7 +449,7 @@ virtual_server 192.168.138.200 80 {
  
  }
 ```
-backup服务器配置keepalived.conf:
+> backup服务器配置keepalived.conf:
 ```
 #这里是全局定义部分
         global_defs {
