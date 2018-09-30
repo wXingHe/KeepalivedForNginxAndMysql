@@ -1,0 +1,3 @@
+如果仅使用nginx集群可使用master和slave中的lvsrs和keepalived.conf
+如果还需添加mysql的VIP,使用master和slave中的lvsrs.appmy和keeplived.conf.appmy并去除.appmy
+test.sh文件是用于测试nignx分发的那个sh脚本
